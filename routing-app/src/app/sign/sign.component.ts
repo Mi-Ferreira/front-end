@@ -40,9 +40,17 @@ export class SignComponent {
     return this.profileForm.get('password')?.value || '';
   }
   onSubmit() {
-    this.sign.email = this.email;
-    this.sign.password = this.password;
-    this.userService.sign(this.sign);
+    const sign: Sign = {
+      email: this.email,
+      password: this.password,
+      role: Role.ADMIN,
+    };
+    try {
+      this.userService.sign(sign);
+    } catch (error) {
+      throw error;
+    }
+
     this.router.navigate(['/login']);
   }
 }
