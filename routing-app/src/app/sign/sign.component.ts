@@ -24,11 +24,6 @@ export class SignComponent {
       Validators.minLength(4),
     ]),
   });
-  sign: Sign = {
-    email: '',
-    password: '',
-    role: Role.ADMIN,
-  };
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -45,12 +40,15 @@ export class SignComponent {
       password: this.password,
       role: Role.ADMIN,
     };
-    try {
-      this.userService.sign(sign);
-    } catch (error) {
-      throw error;
-    }
-
-    this.router.navigate(['/login']);
+    this.userService.sign(sign).subscribe({
+      next: () => {
+        // sucesso, redireciona
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        // erro, exibe no console ou em uma mensagem
+        console.error('Erro ao cadastrar usuário:', err);
+      },
+    });
   }
 }

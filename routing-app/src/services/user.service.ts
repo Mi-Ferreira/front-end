@@ -17,6 +17,6 @@ export class UserService {
   }
 
   sign(sign: Sign) {
-    this.http.post<void>(`http://localhost:8080/users`, sign);
+    return this.http.post<void>(`http://localhost:8080/users`, sign);
   }
 }
